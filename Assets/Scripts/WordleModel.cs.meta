@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: adef57e866377434aaafc9d0eca69432
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - possibleAnswersAsset: {fileID: 4900000, guid: 868921ea63b1d9a449e0bca643563cef, type: 3}
+  - allowedWordsAsset: {fileID: 4900000, guid: 3393184f01faca74f8517f5abde5b44c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
