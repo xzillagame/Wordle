@@ -36,7 +36,7 @@ public class WordleController : MonoBehaviour
 
     public void SubmitGuess()
     {
-        string s = input.text;
+        string s = input.text.Trim();
 
         #region Verify if Input is of length 5 and is only characters
         if (s.Length != 5)
@@ -58,13 +58,12 @@ public class WordleController : MonoBehaviour
 
         Debug.Log(s + " is valid");
 
-        if (model.IsValidGuess(s))
-        {
+        model.IsValidGuess(s);
 
-            model.UpdateCells(s);
-            view.UpdateView(model.cells);
+        model.UpdateCells(s);
+        view.UpdateView(model.cells);
 
-        }
+        
 
 
     }

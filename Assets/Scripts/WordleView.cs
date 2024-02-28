@@ -38,6 +38,7 @@ public class WordleView : MonoBehaviour
                 if (cells[r, c].Letter != '\0')
                 {
                     myButtonArray[c].GetComponentInChildren<TMP_Text>().text = cells[r, c].Letter.ToString();
+                    myButtonArray[c].image.color = cells[r, c].Color;
                 }
 
             }
