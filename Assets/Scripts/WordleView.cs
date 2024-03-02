@@ -7,9 +7,18 @@ public class WordleView : MonoBehaviour
     [SerializeField]
     private GameObject[] rows;
 
+    [SerializeField]
+    private TMP_Text gameStateDisplayToUser;
+
+    public string UserDisplayText 
+    {
+        set { gameStateDisplayToUser.text = value; }
+    }
+
 
     public void Setup()
     {
+        gameStateDisplayToUser.text = "";
 
         for (int r = 0; r < rows.Length; r++)
         {
@@ -17,9 +26,9 @@ public class WordleView : MonoBehaviour
 
             for (int c = 0; c < myButtonArray.Length; c++)
             {
+                myButtonArray[c].image.color = Color.white;
                 myButtonArray[c].GetComponentInChildren<TMP_Text>().text = "";
             }
-
         }
 
     }
@@ -49,15 +58,4 @@ public class WordleView : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Setup();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

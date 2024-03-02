@@ -1,23 +1,45 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEditor.Build;
 using UnityEngine;
 
 public class WordleModel : MonoBehaviour
 {
     private int currentAttempt = 0;
+    public int CurrentAttempt { get { return currentAttempt; } }
+    private const int MAXATTEMPT = 6;
+    public int MaxAttempts { get { return MAXATTEMPT; } }
 
     const int ROWSOFCELLS = 6;
     const int COLUMNSOFCELLS = 5;
 
-    
-    public Cell[,] cells = new Cell[ROWSOFCELLS, COLUMNSOFCELLS];
+
+    #region 2D Array of Cells
+    [SerializeField]
+    private Cell[,] cells = new Cell[ROWSOFCELLS, COLUMNSOFCELLS];
+    public Cell[,] Cells { get { return cells; } }
+    #endregion
+
 
     [SerializeField]
     private TextAsset possibleAnswersAsset,
                       allowedWordsAsset;
 
+
+    #region PossibleAnswers
     private string[] possibleAnswers;
-    private string[] allowedAnswers;
+    public string[] PossibleAnswers { get { return possibleAnswers; } }
+    #endregion
+
+    #region AllowedWord
+    private string[] allowedWord;
+    public string[] AllowedWord { get { return allowedWord; } }
+    #endregion
+
+    #region SubmittedAnswers
+    private List<string> submittedAnswers = new List<string>();
+    public List<string> SubmittedAnswers { get { return submittedAnswers; } }
+
+    #endregion
 
     private string correctAnswer;
 
@@ -25,10 +47,8 @@ public class WordleModel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
-        allowedAnswers = allowedWordsAsset.ToString().Split('\n');
-
+        allowedWord = allowedWordsAsset.ToString().Split('\n');
+        possibleAnswers= possibleAnswersAsset.ToString().Split("\n");
 
         for(int r = 0; r < ROWSOFCELLS ; r++)
         {
@@ -37,8 +57,6 @@ public class WordleModel : MonoBehaviour
                 cells[r, c] = new Cell();
             }
         }
-
-        Setup();
 
     }
 
@@ -57,11 +75,11 @@ public class WordleModel : MonoBehaviour
         #endregion
 
 
-        correctAnswer = "gnoos";//allowedAnswers[Random.Range(0, allowedAnswers.Length)].Trim();
+        correctAnswer = possibleAnswers[Random.Range(0, possibleAnswers.Length)].Trim();
         Debug.Log(correctAnswer);
 
-
         currentAttempt = 0;
+        submittedAnswers.Clear();
 
     }
 
@@ -120,14 +138,14 @@ public class WordleModel : MonoBehaviour
 
                 if (totalLetterCounterInput == totalLetterCounterAnswer)
                 {
-                    //At miniumum blue or green
+                    //At miniumum yellow or green
 
                     for (int cellCounter = 0; cellCounter < COLUMNSOFCELLS; cellCounter++)
                     {
                         if (cells[currentAttempt, cellCounter].Letter == correctAnswer[currentCell] &&
                             cells[currentAttempt, cellCounter].Color == Color.red)
                         {
-                            cells[currentAttempt, cellCounter].Color = Color.blue;
+                            cells[currentAttempt, cellCounter].Color = Color.yellow;
                         }
                     }
 
@@ -139,7 +157,7 @@ public class WordleModel : MonoBehaviour
                         if (cells[currentAttempt, i].Letter == correctAnswer[currentCell] &&
                             cells[currentAttempt, i].Color == Color.red)
                         {
-                            cells[currentAttempt, i].Color = Color.blue;
+                            cells[currentAttempt, i].Color = Color.yellow;
                             totalLetterCounterInput++;
                         }
                     }
@@ -148,6 +166,7 @@ public class WordleModel : MonoBehaviour
             }
 
         }
+
 
         return answerMatches;
 
